@@ -1,7 +1,5 @@
 const cluster = require('cluster')
 
-const http = require('http')
-
 const numCpus = require('os').cpus().length
 
 let workReq = []
@@ -14,6 +12,12 @@ function messageHandler (msg) {
     workReq[this.id] += 1
   }
 }
+
+cluster.setupMaster({
+  exec: './worker.js',
+  args: ['--use', 'http'],
+  silent: false
+})
 
 if (cluster.isMaster) {
   console.log(`主进程 ${process.pid} 正在运行`)
@@ -34,14 +38,4 @@ if (cluster.isMaster) {
   for (const id in cluster.workers) {
     cluster.workers[id].on('message', messageHandler)
   }
-} else {
-  http.createServer((req, res) => {
-    res.end('hello world\n')
-    process.send({ cmd: 'notifyRequest' })
-  }).listen(8000)
-
-  console.log(`工作进程 ${process.pid} 已启动`)
 }
-
-// 通过wrk -t12 -c400 -d30s http://127.0.0.1:8000
-// 测试是否能自动负载均衡到不同的子进程中执行
