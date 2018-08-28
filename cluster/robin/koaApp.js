@@ -13,6 +13,10 @@ router.get('/', async function (ctx, next) {
   ctx.body = 'I am koa app' + ctx.ip
   await next()
 })
+router.post('/', async function (ctx, next) {
+  ctx.body = 'Post'
+  await next()
+})
 
 app.use(router.routes())
 app.use(router.allowedMethods())
