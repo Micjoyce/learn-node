@@ -14,9 +14,12 @@
     "express": "^4.16.3",
     "iconv-lite": "^0.4.23",
     "jsonwebtoken": "^8.5.1",
-    "koa": "^2.5.2",
+    "koa": "^2.7.0",
     "koa-router": "^7.4.0",
+    "koa-send": "^5.0.0",
+    "koa-sslify": "^4.0.3",
     "log4js": "^3.0.2",
+    "mime": "^2.4.3",
     "request": "^2.87.0",
     "user-agent-composer": "^0.1.1"
   }
